@@ -1,0 +1,78 @@
+---
+layout: default
+---
+<div id="posts">
+{{ content }}
+	<div class="clearfix"></div>
+     </div>
+</div>
+
+	<script type="text/javascript">
+  function GetDateDiff(startTime, endTime)
+ {
+     startTime = startTime.replace(/\-/g, "/");
+     endTime = endTime.replace(/\-/g, "/");
+     
+     var sTime = new Date(startTime);
+     var eTime = new Date(endTime);
+     
+     var divNum = 1000 * 3600 * 24;
+	 return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+ }
+ 
+ function getNowTime(){   
+  		var d = new Date();
+  		var year = d.getFullYear();
+ 		 var month = d.getMonth()+1;
+		  var date = d.getDate();
+  		var day = d.getDay();
+ 		 var hours = d.getHours();
+ 		 var minutes = d.getMinutes();
+ 		 var seconds = d.getSeconds();
+ 		 var ms = d.getMilliseconds();  
+ 		 var curDateTime= year;
+			  if(month>9)
+				curDateTime = curDateTime +"-"+month;
+			  else
+				curDateTime = curDateTime +"-0"+month;
+			  if(date>9)
+				 curDateTime = curDateTime +"-"+date;
+			  else
+				curDateTime = curDateTime +"-0"+date;
+			  if(hours>9)
+				curDateTime = curDateTime +" "+hours;
+			  else
+				 curDateTime = curDateTime +" 0"+hours;
+			  if(minutes>9)
+				curDateTime = curDateTime +":"+minutes;
+			  else
+				curDateTime = curDateTime +":0"+minutes;
+			  if(seconds>9)
+				curDateTime = curDateTime +":"+seconds;
+			  else
+				curDateTime = curDateTime +":0"+seconds; 
+  		return curDateTime;
+  } 
+ 
+ 			
+			var st,d,objs,obit;
+			//get the time data for today
+            var taday = new Date();
+            var et = getNowTime();
+			//set each items' margin
+			for (i=1;i<=10;i++)
+			{
+				objs = "data_js" + i;
+				obit = "item_D" + i;
+				st = document.getElementById(objs).innerHTML.substring(1, 10) + " 00:00:00";
+				d = GetDateDiff(st,et);
+				d = Math.pow(Math.abs(d/100),2);
+				if (d>300) { d =300;}
+				document.getElementById(obit).style.marginTop = d + "px";
+				et = st;
+			};
+		//Timeline's height
+			var timelineH = document.getElementById("container").offsetHeight - 40;
+			alert(timelineH);
+			document.getElementById("timeline").style.height = timelineH + "px";
+	</script>

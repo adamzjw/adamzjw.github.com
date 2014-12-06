@@ -1,0 +1,86 @@
+---
+layout: default
+title: For adamzjw
+---
+
+  <ul class="posts" id="divcount">
+    {% for post in site.posts %}
+      <div class="item" id="item_D{{forloop.index}}">
+          <div class='leftCorner'></div>
+            <div class="date">{{ post.date | date_to_string }} </div>
+            <div class="posts_title">&raquo;  <a href="{{ post.url }}">{{ post.title }}</a>  </div>
+            <div id="date_js{{forloop.index}}" style="visibility:hidden; color:#FFFFFF"> {{ post.date |  date_to_xmlschema }}</div>
+      </div>
+    {% endfor %}
+  </ul>
+  
+ <script type="text/javascript">
+			  function GetDateDiff(startTime, endTime)
+			 {
+				 startTime = startTime.replace(/\-/g, "/");
+				 endTime = endTime.replace(/\-/g, "/");
+				 
+				 var sTime = new Date(startTime);
+				 var eTime = new Date(endTime);
+				 
+				 var divNum = 1000 * 3600 * 24;
+				 return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+			 }
+			 
+			 function getNowTime(){   
+					var d = new Date();
+					var year = d.getFullYear();
+					 var month = d.getMonth()+1;
+					  var date = d.getDate();
+					var day = d.getDay();
+					 var hours = d.getHours();
+					 var minutes = d.getMinutes();
+					 var seconds = d.getSeconds();
+					 var ms = d.getMilliseconds();  
+					 var curDateTime= year;
+						  if(month>9)
+							curDateTime = curDateTime +"-"+month;
+						  else
+							curDateTime = curDateTime +"-0"+month;
+						  if(date>9)
+							 curDateTime = curDateTime +"-"+date;
+						  else
+							curDateTime = curDateTime +"-0"+date;
+						  if(hours>9)
+							curDateTime = curDateTime +" "+hours;
+						  else
+							 curDateTime = curDateTime +" 0"+hours;
+						  if(minutes>9)
+							curDateTime = curDateTime +":"+minutes;
+						  else
+							curDateTime = curDateTime +":0"+minutes;
+						  if(seconds>9)
+							curDateTime = curDateTime +":"+seconds;
+						  else
+							curDateTime = curDateTime +":0"+seconds; 
+					return curDateTime;
+			  } 
+			 
+						
+			var st,d,objs,obit,divcount,timelineH = 0;
+			//get the time date for today
+            var taday = new Date();
+            var et = getNowTime();
+			divcount = document.getElementById("divcount");
+			//set each items' margin
+			for (i=1;i<=divcount.children.length;i++)
+			{
+				objs = "date_js" + i;
+				obit = "item_D" + i;
+				st = document.getElementById(objs).innerHTML.substring(0, 11) + " 00:00:00"
+				d = GetDateDiff(st,et);
+				d = Math.pow(Math.abs(d/20)+10,2)-100;
+				if (d>300) { d =300;}
+				document.getElementById(obit).style.marginTop = d + "px";
+				et = st;
+				timelineH = timelineH + d + document.getElementById(obit).offsetHeight;
+			};
+		//Timeline's height
+			timelineH = timelineH - document.getElementById(obit).offsetHeight + 60;
+			document.getElementById("timeline").style.height = timelineH + "px";
+	</script>
